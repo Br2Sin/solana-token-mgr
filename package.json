@@ -29,6 +29,7 @@
     "framer-motion": "^11.3.29",
     "fs": "^0.0.1-security",
     "next": "14.2.5",
+    "node-sass": "^9.0.0",
     "pino-pretty": "^11.2.2",
     "react": "^18",
     "react-dom": "^18",
