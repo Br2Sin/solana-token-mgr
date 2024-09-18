@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import base58 from "bs58";
 import {
@@ -33,16 +33,18 @@ import {
 } from "@/lib/utils";
 import { SelectorIcon } from "@/components/SelectorIcon";
 import {
+  AppContext,
   toastError,
   toastSuccess,
   uploadJsonToPinata,
-  useAppContext,
 } from "../context/AppContext";
 
 const pinataPublicURL = "https://gateway.pinata.cloud/ipfs/";
 
 export default function Home() {
-  const { wallet, anchorWallet } = useAppContext();
+  const wallet = useWallet();
+  const anchorWallet = useAnchorWallet();
+  const { handleSetMetaData } = useContext(AppContext);
 
   const [loading, setLoading] = useState(false);
   const [uploadingStatus, setUploadLoading] = useState(false);
@@ -99,7 +101,6 @@ export default function Home() {
 
     setLoading(true);
 
-    const { handleSetMetaData } = useAppContext();
     const imgURL = await handleSetMetaData();
     const uploadedJsonUrl = await uploadJsonToPinata({
       name: mintTokenName,

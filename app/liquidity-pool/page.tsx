@@ -20,7 +20,7 @@ import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useState, useEffect } from "react";
 import { CiCirclePlus } from "react-icons/ci";
-import { toastError, toastSuccess, useAppContext } from "../context/AppContext";
+import { toastError, toastSuccess } from "../context/AppContext";
 
 const standList = [
   { key: "0", label: "2.8 SOL" },
@@ -35,7 +35,8 @@ const lengthList = [
 ];
 
 export default function Home() {
-  const { wallet, anchorWallet } = useAppContext();
+  const wallet = useWallet();
+  const anchorWallet = useAnchorWallet();
 
   const [tokenAddress, setTokenAddress] = useState("");
   const [lpWallet, setLpWallet] = useState("");

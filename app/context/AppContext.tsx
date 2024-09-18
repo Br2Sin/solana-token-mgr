@@ -13,10 +13,6 @@ import { toast } from "react-toastify";
 export interface AppContextType {
   state: string;
   updateState: (newState: string) => void;
-  wallet: WalletContextState;
-  useWallet: () => any;
-  anchorWallet: AnchorWallet | undefined;
-  useAnchorWallet: () => any;
   handleSetMetaData: () => any;
   uploadingStatus: boolean;
   setUploadLoading: (input: boolean) => void;
@@ -29,7 +25,17 @@ export interface AppContextType {
 const pinataPublicURL = "https://gateway.pinata.cloud/ipfs/";
 
 // Create the context with a default value
-export const AppContext = createContext<AppContextType | undefined>(undefined);
+export const AppContext = createContext<AppContextType>({
+  state: "",
+  updateState: () => {},
+  handleSetMetaData: () => {},
+  uploadingStatus: false,
+  setUploadLoading: () => {},
+  images: [],
+  setImages: () => {},
+  metaDataURL: "",
+  setMetaDataURL: () => {},
+});
 
 // Create the provider component
 export const AppProvider: React.FC<{ children: ReactNode }> = ({
@@ -77,10 +83,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         state,
         updateState,
-        wallet,
-        useWallet,
-        anchorWallet,
-        useAnchorWallet,
         handleSetMetaData,
         uploadingStatus,
         setUploadLoading,
@@ -95,14 +97,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-// Create a custom hook to use the context
-export const useAppContext = (): AppContextType => {
-  const context = useContext(AppContext);
-  if (context === undefined) {
-    throw new Error("useAppContext must be used within an AppProvider");
-  }
-  return context;
-};
+// // Create a custom hook to use the context
+// export const useAppContext = (): AppContextType => {
+//   const context = useContext(AppContext);
+//   if (context === undefined) {
+//     throw new Error("useAppContext must be used within an AppProvider");
+//   }
+//   return context;
+// };
 
 export const toastError = (str: string) => {
   toast.error(str, {

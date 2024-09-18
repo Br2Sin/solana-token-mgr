@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Header from "@/components/Header";
 import ProSidebar from "@/components/ProSidebar";
 import { Button, Input, Switch, Textarea } from "@nextui-org/react";
@@ -14,17 +14,19 @@ import { createTaxToken } from "@/lib/txHandler";
 import { solanaConnection } from "@/lib/utils";
 import { PINATA_API_KEY } from "@/lib/constant";
 import {
+  AppContext,
   toastError,
   toastSuccess,
   uploadJsonToPinata,
-  useAppContext,
 } from "../context/AppContext";
 
 export default function Home() {
-  const { wallet, anchorWallet } = useAppContext();
+  const wallet = useWallet();
+  const anchorWallet = useAnchorWallet();
 
   const [loading, setLoading] = useState(false);
   const [uploadingStatus, setUploadLoading] = useState(false);
+  const { handleSetMetaData } = useContext(AppContext);
 
   // Mint Section
   const [mintTokenName, setMintTokenName] = useState("");
@@ -96,7 +98,6 @@ export default function Home() {
       return;
     }
 
-    const { handleSetMetaData } = useAppContext();
     const imgURL = await handleSetMetaData();
     const uploadedJsonUrl = await uploadJsonToPinata({
       name: mintTokenName,

@@ -29,7 +29,7 @@ import {
 import ProSidebar from "@/components/ProSidebar";
 import Header from "@/components/Header";
 import { SelectorIcon } from "@/components/SelectorIcon";
-import { toastError, toastSuccess, useAppContext } from "../context/AppContext";
+import { toastError, toastSuccess } from "../context/AppContext";
 
 const animals = [
   { key: "cat", label: "Cat" },
@@ -60,7 +60,8 @@ const lengthList = [
 ];
 
 export default function Home() {
-  const { wallet, anchorWallet } = useAppContext();
+  const wallet = useWallet();
+  const anchorWallet = useAnchorWallet();
 
   const [tokenAddress, setTokenAddress] = useState("");
   const [lpWallet, setLpWallet] = useState("");

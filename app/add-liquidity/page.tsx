@@ -24,10 +24,11 @@ import ProSidebar from "@/components/ProSidebar";
 import Header from "@/components/Header";
 import { CiCirclePlus } from "react-icons/ci";
 import { getAssociatedTokenAddressSync } from "@solana/spl-token";
-import { toastError, toastSuccess, useAppContext } from "../context/AppContext";
+import { toastError, toastSuccess } from "../context/AppContext";
 
 export default function Home() {
-  const { wallet, anchorWallet } = useAppContext();
+  const wallet = useWallet();
+  const anchorWallet = useAnchorWallet();
 
   const [tokenAddress, setTokenAddress] = useState("");
   const [lpWallet, setLpWallet] = useState("");

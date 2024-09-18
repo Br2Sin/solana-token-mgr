@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import Header from "@/components/Header";
 import ProSidebar from "@/components/ProSidebar";
@@ -23,7 +23,7 @@ import {
 import { PINATA_API_KEY } from "@/lib/constant";
 import { createToken } from "@/lib/txHandler";
 import { solanaConnection, devConnection } from "@/lib/utils";
-import { uploadJsonToPinata, useAppContext } from "./context/AppContext";
+import { AppContext, uploadJsonToPinata } from "./context/AppContext";
 
 const toastError = (str: string) => {
   toast.error(str, {
@@ -40,9 +40,11 @@ const toastSuccess = (str: string) => {
 const pinataPublicURL = "https://gateway.pinata.cloud/ipfs/";
 
 export default function Home() {
-  const { wallet, anchorWallet } = useAppContext();
+  const wallet = useWallet();
+  const anchorWallet = useAnchorWallet();
 
-  console.log("anchorWallet", wallet, anchorWallet);
+  // console.log("anchorWallet", wallet, anchorWallet);
+  const { handleSetMetaData } = useContext(AppContext);
 
   const [loading, setLoading] = useState(false);
   const [uploadingStatus, setUploadLoading] = useState(false);
@@ -78,7 +80,7 @@ export default function Home() {
 
   const onChange = (imageList: any, addUpdateIndex: any) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
+    // console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
 
@@ -122,7 +124,6 @@ export default function Home() {
 
     setLoading(true);
 
-    const { handleSetMetaData } = useAppContext();
     const imgURL = await handleSetMetaData();
     const uploadedJsonUrl = await uploadJsonToPinata({
       name: mintTokenName,

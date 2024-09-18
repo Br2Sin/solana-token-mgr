@@ -34,10 +34,11 @@ import {
 import { SelectorIcon } from "@/components/SelectorIcon";
 import { toast } from "react-toastify";
 import SimpleBar from "simplebar-react";
-import { toastError, toastSuccess, useAppContext } from "../context/AppContext";
+import { toastError, toastSuccess } from "../context/AppContext";
 
 export default function Home() {
-  const { wallet, anchorWallet } = useAppContext();
+  const wallet = useWallet();
+  const anchorWallet = useAnchorWallet();
 
   const [tokenAddress, setTokenAddress] = useState("");
   const [lpWallet, setLpWallet] = useState("");
